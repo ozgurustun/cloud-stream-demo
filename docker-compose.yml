@@ -2,7 +2,9 @@ version: '3.8'
 
 services: 
   rabbit-producer:
-    image: ozgurustundev/cloud-stream-demo-rabbit-producer:1.0
+    image: ozgurustundev/demo-rabbit-producer:1.0
+    hostname: rabbit-producer
+    container_name: rabbit-producer
     ports: 
       - "8081:8081"
     depends_on: 
@@ -13,7 +15,9 @@ services:
     networks:
       - local
   rabbit-consumer-kafka-producer:
-    image: ozgurustundev/cloud-stream-demo-rabbit-consumer-kafka-producer:1.0
+    image: ozgurustundev/demo-rabbit-consumer-kafka-producer:1.0
+    hostname: rabbit-consumer-kafka-producer
+    container_name: rabbit-consumer-kafka-producer
     ports:
       - "8082:8082"
     depends_on: 
@@ -25,6 +29,8 @@ services:
       - local
   rabbitmq-service:
     image: rabbitmq:3-management-alpine
+    hostname: rabbitmq-service
+    container_name: rabbitmq-service
     ports: 
       - "5672:5672"
       - "15672:15672"
@@ -53,7 +59,7 @@ services:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://broker:29092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://broker:29092,PLAINTEXT_HOST://broker:9092
       KAFKA_METRIC_REPORTERS: io.confluent.metrics.reporter.ConfluentMetricsReporter
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
@@ -63,6 +69,8 @@ services:
       CONFLUENT_METRICS_REPORTER_TOPIC_REPLICAS: 1
       CONFLUENT_METRICS_ENABLE: 'true'
       CONFLUENT_SUPPORT_CUSTOMER_ID: 'anonymous'
+      KAFKA_DELETE_TOPIC_ENABLE: "true"
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "false"
     networks:
       - local
   kafka-tools:

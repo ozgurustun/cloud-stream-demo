@@ -2,7 +2,7 @@ POST http://127.0.0.1:8081/data
 Content-Type: application/json
 
 {
-  "data": "test-data"
+  "data": "testing data"
 }
 
 ###
