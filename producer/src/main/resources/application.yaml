@@ -1,0 +1,26 @@
+server:
+  port: 8081
+spring:
+  application:
+    name:
+      data-rabbit-publisher-service
+  cloud:
+    stream:
+      bindings:
+        data-rabbit-publish-channel:
+          destination: data-service.test
+          binder: rabbit
+      binders:
+        rabbit:
+          type: rabbit
+          environment:
+            spring:
+              rabbitmq:
+                host: rabbitmq-service
+                port: 5672
+                username: guest
+                password: guest
+                virtual-host: /
+logging:
+  level:
+    com.ozgurustun: DEBUG

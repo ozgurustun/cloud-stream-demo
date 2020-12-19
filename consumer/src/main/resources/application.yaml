@@ -1,0 +1,35 @@
+server:
+  port: 8082
+spring:
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers: broker:9092
+      bindings:
+        data-rabbit-consumer-channel:
+          destination: data-service.test
+          group: data-service-group
+          binder: rabbit
+        data-kafka-producer-channel:
+          destination: test-topic
+          binder: kafka
+      binders:
+        rabbit:
+          type: rabbit
+          environment:
+            spring:
+              rabbitmq:
+                host: rabbitmq-service
+                port: 5672
+                username: guest
+                password: guest
+                virtual-host: /
+        kafka:
+          type: kafka
+logging:
+  level:
+    com.ozgurustun: DEBUG
+    org.apache.kafka : WARN
+
+
