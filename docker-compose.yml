@@ -70,7 +70,6 @@ services:
       CONFLUENT_METRICS_ENABLE: 'true'
       CONFLUENT_SUPPORT_CUSTOMER_ID: 'anonymous'
       KAFKA_DELETE_TOPIC_ENABLE: "true"
-      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "false"
     networks:
       - local
   kafka-tools:
